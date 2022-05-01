@@ -106,11 +106,14 @@ public class PlayerController : SwipeMecLast
         windEffect.SetActive(false);
         powerUpUI.SetActive(false);
         forwardSpeed = 6;
+        int makeMoney=0;
         while (lastScaleY>.5f)
         {
             lastScaleY -= .2f;
             camera.fieldOfView -= .2f;
-            UIManager.instance.MoneyCollectAnim(playerVFX.position);
+            if (makeMoney % 3 == 0)
+                UIManager.instance.MoneyCollectAnim(playerVFX.position);
+            makeMoney++;
             playerVFX.DOLocalMoveY(lastScaleY - .95f, .05f).SetEase(Ease.Linear);
             cube.DOScaleY(lastScaleY, .05f).SetEase(Ease.Linear);
             pointText.text = ((int)(lastScaleY * 10)).ToString();
