@@ -1,10 +1,8 @@
 using DG.Tweening;
 using Mechanics;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-
 public class PlayerController : SwipeMecLast
 {
     [Header("Camera")]
@@ -152,7 +150,7 @@ public class PlayerController : SwipeMecLast
             pointText.text = "MAX";
         }
         else
-        { 
+        {
             cube.DOScaleY(0, .5f).SetEase(Ease.Linear);
             WholeBodyRagdoll(true);
             GameManager.instance.EndGame(1);
