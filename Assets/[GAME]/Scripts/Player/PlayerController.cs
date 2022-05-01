@@ -41,6 +41,8 @@ public class PlayerController : SwipeMecLast
 
     Renderer renderer;
     float camFOV = 60;
+    float camRotY = 35;
+    int x = 0;
     public override void Start()
     {
         cubeMat.color = Color.red;
@@ -79,6 +81,7 @@ public class PlayerController : SwipeMecLast
             StartCoroutine(EndGame());
         else if (other.CompareTag("End"))
         {
+            x++;
             renderer = other.GetComponent<Renderer>();
             renderer.GetPropertyBlock(materialProperty);
             materialProperty.SetColor("_Color", Color.cyan);
@@ -114,6 +117,8 @@ public class PlayerController : SwipeMecLast
             cube.DOScaleY(lastScaleY, .05f).SetEase(Ease.Linear);
             pointText.text = ((int)(lastScaleY * 10)).ToString();
             yield return new WaitForSeconds(.05f);
+            if (x == 10)
+                lastScaleY = .5f;
         }
 
         pointText.transform.parent.gameObject.SetActive(false);
@@ -131,7 +136,9 @@ public class PlayerController : SwipeMecLast
        
         if (lastScaleY> .5f && lastScaleY <20)
         {
-            camFOV += point;
+            camFOV += point * 1.1f;
+            camRotY += point / 2f;
+            camera.transform.DORotate(new Vector3(camRotY,0,0), .3f);
             camera.DOFieldOfView(camFOV, .3f);
             animator.SetTrigger(anim);
             playerVFX.DOLocalMoveY(lastScaleY - .95f, .5f).SetEase(Ease.Linear);
